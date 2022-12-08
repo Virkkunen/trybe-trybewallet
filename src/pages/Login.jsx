@@ -30,8 +30,9 @@ class Login extends React.Component {
     e.preventDefault();
     const { email } = this.state;
 
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     dispatch(addUserInfo(email));
+    history.push('/carteira');
   };
 
   render() {
@@ -76,6 +77,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default connect()(Login);
