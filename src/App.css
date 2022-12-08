@@ -1,41 +1,65 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700;800&display=swap') ;
+
+* {
+  box-sizing: border-box;
+  font-family: Fira Sans, sans-serif;
+  margin: 0;
+  padding: 0;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
+body {
+  align-content: center;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  display: grid;
   min-height: 100vh;
+  place-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.login-container {
+  background-color: #313244;
+  border-radius: 6px;
+  padding: 24px;
 }
 
-@keyframes App-logo-spin {
+input {
+  background-color: #a6adc8;
+  border: 0;
+  border-radius: 6px;
+  outline: 0;
+  padding: 6px;
+}
 
-  from {
-    transform: rotate(0deg);
-  }
+input:focus {
+  outline: 0;
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+form {
+  display: flex;
+  gap: 0 6px;
+}
+
+button {
+  background-color: #89b4fa;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 6px;
+  color: #11111b;
+  font-weight: 600;
+  padding: 6px;
+  transition: all 0.25s ease-in-out;
+}
+
+button:hover {
+  cursor: pointer;
+  filter: brightness(115%);
+}
+
+button:active {
+  filter: brightness(75%);
+}
+
+button:disabled {
+  cursor: auto;
+  filter: brightness(75%) saturate(15%);
 }
