@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import WalletForm from '../components/WalletForm';
-import fetchCurrency from '../services/fetchCurrency';
+import * as api from '../services/fetchCurrency';
 import { setCurrencies } from '../redux/actions';
 
 class Wallet extends React.Component {
@@ -22,7 +22,7 @@ class Wallet extends React.Component {
   };
 
   getCurrencies = async () => {
-    const currencies = await fetchCurrency();
+    const currencies = await api.fetchCurrencies();
     this.setState({
       currencies,
     }, this.currenciesToGlobalState);
