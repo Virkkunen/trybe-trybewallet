@@ -20,10 +20,15 @@ class Header extends Component {
   }
 }
 
+Header.defaultProps = {
+  total: 0,
+  currency: 'BRL',
+};
+
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
-  currency: PropTypes.string.isRequired,
+  total: PropTypes.number,
+  currency: PropTypes.string,
 };
 
 export default Header;
