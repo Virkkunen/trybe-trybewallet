@@ -29,12 +29,12 @@ class Wallet extends React.Component {
   };
 
   render() {
-    const { email, currencies } = this.props;
+    const { email } = this.props;
 
     return (
       <div>
         <Header email={ email } />
-        <WalletForm currencies={ currencies } />
+        <WalletForm />
       </div>
     );
   }
@@ -48,7 +48,6 @@ const mapStateToProps = (state) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
-  currencies: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default connect(mapStateToProps)(Wallet);
