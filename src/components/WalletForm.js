@@ -30,12 +30,13 @@ class WalletForm extends Component {
   };
 
   handleSubmit = async (e) => {
-    e.preventDefaults();
-    const { dispatch } = this.props;
+    e.preventDefault();
+    const { dispatch, expenses } = this.props;
+    const { value, description, currency, method, tag } = this.state; // esqueci disso
 
     const currs = await api.fetchRates();
     const expense = {
-      id: 0, // descobrir como mudar
+      id: expenses.length, // ve o tamanho do state global e define como id
       value,
       description,
       currency,
@@ -133,6 +134,8 @@ class WalletForm extends Component {
 
 WalletForm.propTypes = {
   currencies: PropTypes.instanceOf(Array).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  expenses: PropTypes.instanceOf(Array).isRequired,
 };
 
 const mapStateToProps = (state) => ({
