@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class WalletForm extends Component {
   state = {
@@ -8,6 +9,7 @@ class WalletForm extends Component {
 
   render() {
     const { value, description } = this.state;
+    const { currencies } = this.props;
     return (
       <div>
         <form>
@@ -35,7 +37,16 @@ class WalletForm extends Component {
               data-testid="currency-input"
               name="currency"
             >
-              <option value="" hidden selected>Moeda</option>
+              {
+                currencies.map((currency) => (
+                  <option
+                    key={ currency }
+                    value={ currency }
+                  >
+                    {currency}
+                  </option>
+                ))
+              }
             </select>
           </label>
 
@@ -44,5 +55,9 @@ class WalletForm extends Component {
     );
   }
 }
+
+WalletForm.propTypes = {
+  currencies: PropTypes.instanceOf(Array).isRequired,
+};
 
 export default WalletForm;
