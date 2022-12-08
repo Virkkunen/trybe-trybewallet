@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addUserInfo } from '../redux/actions';
 
@@ -30,7 +31,6 @@ class Login extends React.Component {
     const { email } = this.state;
 
     const { dispatch } = this.props;
-    console.log(email)
     dispatch(addUserInfo(email));
   };
 
@@ -73,5 +73,9 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect()(Login);
