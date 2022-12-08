@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import * as api from '../services/fetchCurrency';
+import { addExpense } from '../redux/actions';
 
 class WalletForm extends Component {
   state = {
-    value: 0,
+    value: '',
     description: '',
     currency: 'USD',
     method: 'money',
@@ -17,12 +19,40 @@ class WalletForm extends Component {
     });
   };
 
+  clearState = () => {
+    this.setState({
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'money',
+      tag: 'food',
+    });
+  };
+
+  handleSubmit = async (e) => {
+    e.preventDefaults();
+    const { dispatch } = this.props;
+
+    const currs = await api.fetchRates();
+    const expense = {
+      id: 0, // descobrir como mudar
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRate: currs,
+    };
+    dispatch(addExpense(expense));
+    this.clearState();
+  };
+
   render() {
     const { value, description, currency, method, tag } = this.state;
     const { currencies } = this.props;
     return (
       <div>
-        <form>
+        <form onSubmit={ this.handleSubmit }>
           <label htmlFor="description">
             <span>Despesa: </span>
             <input
@@ -90,6 +120,11 @@ class WalletForm extends Component {
               <option value="health">Saúde</option>
             </select>
           </label>
+          <button
+            type="submit"
+          >
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
