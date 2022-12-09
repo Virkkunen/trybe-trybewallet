@@ -29,11 +29,9 @@ class Wallet extends React.Component {
   };
 
   render() {
-    const { email } = this.props;
-
     return (
       <div>
-        <Header email={ email } />
+        <Header />
         <WalletForm />
       </div>
     );
@@ -46,7 +44,6 @@ const mapStateToProps = (state) => ({
 });
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

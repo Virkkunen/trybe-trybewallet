@@ -42,7 +42,7 @@ class WalletForm extends Component {
       currency,
       method,
       tag,
-      exchangeRate: currs,
+      exchangeRates: currs,
     };
     dispatch(addExpense(expense));
     this.clearState();
@@ -102,9 +102,9 @@ class WalletForm extends Component {
               value={ method }
               onChange={ this.handleChange }
             >
-              <option value="money">Dinheiro</option>
-              <option value="credit">Cartão de crédito</option>
-              <option value="debit">Cartão de débito</option>
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
           <label htmlFor="tag">
@@ -114,11 +114,11 @@ class WalletForm extends Component {
               value={ tag }
               onChange={ this.handleChange }
             >
-              <option value="food">Alimentação</option>
-              <option value="fun">Lazer</option>
-              <option value="work">Trabalho</option>
-              <option value="transport">Transporte</option>
-              <option value="health">Saúde</option>
+              <option value="Alimentação">Alimentação</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saúde">Saúde</option>
             </select>
           </label>
           <button
