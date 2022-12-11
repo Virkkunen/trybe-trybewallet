@@ -2,6 +2,7 @@ export const ADD_USER_INFO = 'ADD_USER_INFO';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const addUserInfo = (email) => ({
   type: ADD_USER_INFO,
@@ -21,4 +22,9 @@ export const addExpense = (expenses) => ({
 export const removeExpense = (expenses) => ({
   type: REMOVE_EXPENSE,
   payload: expenses,
+});
+
+export const editExpense = (id) => ({
+  type: EDIT_EXPENSE,
+  payload: id,
 });
