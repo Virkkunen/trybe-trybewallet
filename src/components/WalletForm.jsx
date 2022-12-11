@@ -29,11 +29,9 @@ class WalletForm extends Component {
     });
   };
 
-  handleSubmit = async (e) => {
-    e.preventDefault();
+  submitNewExpense = async () => {
     const { dispatch, expenses } = this.props;
-    const { value, description, currency, method, tag } = this.state; // esqueci disso
-
+    const { value, description, currency, method, tag } = this.state;
     const currs = await api.fetchRates();
     const expense = {
       id: expenses.length, // ve o tamanho do state global e define como id
@@ -46,6 +44,29 @@ class WalletForm extends Component {
     };
     dispatch(addExpense(expense));
     this.clearState();
+  };
+
+  editExpense = async () => {
+    const { dispatch, expenses } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    let editedExpense = expenses.find((exp) => exp.id === idToEdit);
+    // usar let pra poder editar mais facil
+    editedExpense = {
+      ...editedExpense,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    };
+  };
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    const { editMode } = this.state;
+    const { idToEdit } = this.props;
+    if (!editMode) this.submitNewExpense();
+    if (editMode) this.editExpense(idToEdit);
   };
 
   render() {
@@ -136,6 +157,7 @@ WalletForm.propTypes = {
   currencies: PropTypes.instanceOf(Array).isRequired,
   dispatch: PropTypes.func.isRequired,
   expenses: PropTypes.instanceOf(Array).isRequired,
+  idToEdit: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
