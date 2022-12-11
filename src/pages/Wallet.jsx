@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import WalletForm from '../components/WalletForm';
 import * as api from '../services/fetchCurrency';
 import { setCurrencies } from '../redux/actions';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   state = {
@@ -33,6 +34,7 @@ class Wallet extends React.Component {
       <div>
         <Header />
         <WalletForm />
+        <Table />
       </div>
     );
   }
