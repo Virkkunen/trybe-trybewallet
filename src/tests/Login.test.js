@@ -1,3 +1,4 @@
+import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
@@ -56,7 +57,7 @@ describe('Testes do Login', () => {
   });
 
   test('Se o botão Login redireciona pra página correta', () => {
-    renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
     const email = 'email@domain.net';
     const passwd = '12345678990';
@@ -68,6 +69,8 @@ describe('Testes do Login', () => {
     userEvent.type(passwdEl, passwd);
     expect(loginBtn).toBeEnabled();
     userEvent.click(loginBtn);
+
     const { pathname } = history.location;
+    expect(pathname).toBe('/carteira');
   });
 });
