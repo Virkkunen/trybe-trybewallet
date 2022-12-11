@@ -72,7 +72,7 @@ Table.defaultProps = {
 
 Table.propTypes = {
   expenses: PropTypes.instanceOf(Array),
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
