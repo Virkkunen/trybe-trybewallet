@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { removeExpense } from '../redux/actions';
 
 class Table extends Component {
+  deleteExpense = (id) => {
+    // console.log(id)
+    const { expenses, dispatch } = this.props;
+    const updatedExpenses = expenses.filter((exp) => exp.id !== id);
+    // console.log(updatedExpenses);
+    dispatch(removeExpense(updatedExpenses));
+  };
+
+  handleClick = (e, id) => {
+    // nada ortodoxo isso
+    // const rowId = target.parentElement.id;
+    if (e.target.name === 'delete') this.deleteExpense(id);
+  };
+
   render() {
     const { expenses } = this.props;
     // mapear infos na tabela
@@ -26,7 +41,7 @@ class Table extends Component {
         <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
         <td>{ Number(exchangeRates[currency].ask * value).toFixed(2) }</td>
         <td>Real</td>
-        <td>
+        <td id={ id }>
           <button
             name="edit"
             type="button"
@@ -36,6 +51,8 @@ class Table extends Component {
           <button
             name="delete"
             type="button"
+            data-testid="delete-btn"
+            onClick={ (e) => this.handleClick(e, id) }
           >
             Excluir
           </button>
@@ -72,7 +89,7 @@ Table.defaultProps = {
 
 Table.propTypes = {
   expenses: PropTypes.instanceOf(Array),
-  // dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
