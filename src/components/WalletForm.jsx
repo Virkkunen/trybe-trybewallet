@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as api from '../services/fetchCurrency';
-import { addExpense } from '../redux/actions';
+import { addExpense, exitEditor, updateExpenses } from '../redux/actions';
 
 class WalletForm extends Component {
   state = {
@@ -11,7 +11,32 @@ class WalletForm extends Component {
     currency: 'USD',
     method: 'Dinheiro',
     tag: 'Alimentação',
+    edit: false,
   };
+
+  componentDidUpdate() {
+    const { dispatch, expenses, idToEdit, editor } = this.props;
+    if (editor) {
+      dispatch(exitEditor()); // pra parar o loop
+
+      const {
+        value,
+        description,
+        currency,
+        method,
+        tag,
+      } = expenses.find((exp) => exp.id === idToEdit);
+
+      this.setState({
+        value,
+        description,
+        currency,
+        method,
+        tag,
+        edit: true,
+      });
+    }
+  }
 
   handleChange = ({ target }) => {
     this.setState({
@@ -26,6 +51,7 @@ class WalletForm extends Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      edit: false,
     });
   };
 
@@ -46,11 +72,10 @@ class WalletForm extends Component {
     this.clearState();
   };
 
-  editExpense = async () => {
+  editExpense = async (id) => {
     const { dispatch, expenses } = this.props;
     const { value, description, currency, method, tag } = this.state;
-    let editedExpense = expenses.find((exp) => exp.id === idToEdit);
-    // usar let pra poder editar mais facil
+    let editedExpense = expenses.find((exp) => exp.id === id);
     editedExpense = {
       ...editedExpense,
       value,
@@ -59,18 +84,25 @@ class WalletForm extends Component {
       method,
       tag,
     };
+
+    const filteredExpenses = expenses.filter((exp) => exp.id !== id);
+    const updatedExpenses = [...filteredExpenses, editedExpense]
+      .sort((a, b) => a.id - b.id);
+    // console.log(updatedExpenses);
+    dispatch(updateExpenses(updatedExpenses));
+    this.clearState();
   };
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { editMode } = this.state;
+    const { edit } = this.state;
     const { idToEdit } = this.props;
-    if (!editMode) this.submitNewExpense();
-    if (editMode) this.editExpense(idToEdit);
+    if (!edit) this.submitNewExpense();
+    if (edit) this.editExpense(idToEdit);
   };
 
   render() {
-    const { value, description, currency, method, tag } = this.state;
+    const { value, description, currency, method, tag, edit } = this.state;
     const { currencies } = this.props;
     return (
       <div>
@@ -145,7 +177,7 @@ class WalletForm extends Component {
           <button
             type="submit"
           >
-            Adicionar despesa
+            { edit ? 'Editar despesa' : 'Adicionar despesa' }
           </button>
         </form>
       </div>
@@ -157,7 +189,11 @@ WalletForm.propTypes = {
   currencies: PropTypes.instanceOf(Array).isRequired,
   dispatch: PropTypes.func.isRequired,
   expenses: PropTypes.instanceOf(Array).isRequired,
-  idToEdit: PropTypes.number.isRequired,
+  idToEdit: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
+  editor: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
